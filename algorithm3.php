@@ -17,10 +17,11 @@
 // また通分には最小公約数を求める関数gcd、約分には最大公約数を求める関数lcm をそれぞれ利用してください。
 
 $num1 = 1;  // 分子
-$deno1 = 50; // 分母
-$num2 = 1;  // 分子
-$deno2 = 100; // 分母
+$deno1 = 7; // 分母
+$num2 = 4;  // 分子
+$deno2 = 9; // 分母
 
+echo $num1."/".$deno1." + ".$num2."/".$deno2." = "; 
 calcFraction($num1, $deno1, $num2, $deno2);
 
 function calcFraction($num1, $deno1, $num2, $deno2) {

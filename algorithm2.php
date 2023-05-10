@@ -18,61 +18,50 @@
 // 100円玉で購入した場合、
 // 50円足りません。
 
-$yen = 9999;   // 購入金額
+$yen = 10000; // 購入金額
 $product = 150; // 商品金額
+$money = [10000, 5000, 1000, 500, 100, 50, 10, 5, 1];
 
-function calc($yen, $product) {
+function calc($yen, $product)
+{
     // この関数内に処理を記述
-    $yen = $yen - $product;
-    $yenp = $yen % 10000;
-    $yen10000 = ($yen - $yenp) / 10000;
-    echo "10000円札x".$yen10000."枚、";
-    $yen = $yenp;
-    $yenp = $yen % 5000;
-    $yen5000 = ($yen - $yenp) / 5000;
-    echo "5000円札x".$yen5000."枚、";
-    $yen = $yenp;
-    $yenp = $yen % 1000;
-    $yen1000 = ($yen - $yenp) / 1000;
-    echo "1000円札x".$yen1000."枚、";
-    $yen = $yenp;
-    $yenp = $yen % 500;
-    $yen500 = ($yen - $yenp) / 500;
-    echo "500円玉x".$yen500."枚、";
-    $yen = $yenp;
-    $yenp = $yen % 100;
-    $yen100 = ($yen - $yenp) / 100;
-    echo "100円玉x".$yen100."枚、";
-    $yen = $yenp;
-    $yenp = $yen % 50;
-    $yen50 = ($yen - $yenp) / 50;
-    echo "50円玉x".$yen50."枚、";
-    $yen = $yenp;
-    $yenp = $yen % 10;
-    $yen10 = ($yen - $yenp) / 10;
-    echo "10円玉x".$yen10."枚、";
-    $yen = $yenp;
-    $yenp = $yen % 5;
-    $yen5 = ($yen - $yenp) / 5;
-    echo "5円玉x".$yen5."枚、";
-    $yen = $yenp;
-    $yen1 = $yen;
-    echo "1円玉x".$yen1."枚\n";
+    $money = [10000, 5000, 1000, 500, 100, 50, 10, 5, 1];
+    $count = count($money);
+    $change = $yen - $product;
+    $result = [];
+    if ($change < 0) {
+        return $change;
+    }
+    $x = 0; 
+    $y = 0; 
+    for ($i = 0; $i <= $count - 1; $i++) {
+        if ($change < $money[$i]) {
+            $result[$i] = 0;
+        } else {
+            $x = floor($change / $money[$i]);
+            $result[$i] = $x;
+            $y = $change % $money[$i];
+            $change = $y;
+        }
+    }
+    return $result;
 }
-
-if($yen >= $product){
-    calc($yen, $product);
+echo $yen . "円で購入した場合、\n";
+if (calc($yen, $product) < 0) {
+    $aa = $product - $yen;
+    echo $aa . "円足りません。\n";
 } else {
-    $husoku = $product - $yen;
-    echo $husoku."円足りません。\n";
+    $oturi = calc($yen, $product);
+    $otulist = [];
+    for($i = 0 ; $i <= 8 ; $i ++){
+        if($i <= 2){
+        array_push($otulist, $money[$i]."円札x" . $oturi[$i] . "枚");
+        } else {
+        array_push($otulist, $money[$i]."円玉x" . $oturi[$i] . "枚");
+        }
+    }
+    $oturitext = implode('、', $otulist);
+    echo $oturitext;
+    echo "\n";
 }
-
-
-// 10 / 4 = 2 … 2
-// 10 / 4 = 2 + 2
-// 10 = 4 * 2 + 2
-// $yen / 10000 = 0　…　9850
-// $yen = 10000 * 0　+　9850
-
-
 ?>
